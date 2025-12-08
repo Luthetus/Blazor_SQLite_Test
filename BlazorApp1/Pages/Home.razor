@@ -1,7 +1,139 @@
 ﻿@page "/"
+@using Microsoft.Data.Sqlite
+@using Microsoft.EntityFrameworkCore
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+<div>
+    Goal: represent a filepath by an int within C# managed memory,
+    and map to the respective filepath on demand by asking a DB that exists outside C# managed memory.
+</div>
 
-Welcome to your new app.
+<hr />
+
+<div>
+    Reason: the string filepath both occupies more space in memory (for the text itself),
+    and has a higher garbage collection overhead than an int.
+</div>
+
+<hr />
+
+<div>
+    Resources (learn.microsoft.com):
+    <ul>
+        <li>
+            <a target="_blank" href="https://learn.microsoft.com/en-us/dotnet/standard/garbage-collection/fundamentals">
+                Fundamentals of garbage collection
+            </a>
+        </li>
+        <li>
+            <a target="_blank" href="https://learn.microsoft.com/en-us/visualstudio/profiling/dotnet-alloc-tool?view=visualstudio">
+                Analyze memory usage by using the .NET Object Allocation tool
+            </a>
+        </li>
+    </ul>
+</div>
+
+<hr />
+
+<input @bind="_wordAdd"/>
+<button @onclick="DoWordAdd">Add</button>
+
+@*
+<hr/>
+
+<input @bind="_wordCheck"/>
+<button @onclick="DoWordCheck">Check</button>
+*@
+
+<hr/>
+
+<button @onclick="DoReadDbEntriesIntoMemoryAndDisplayOnUi">DoReadDbEntriesIntoMemoryAndDisplayOnUi</button>
+@{ var nameListLocal = _nameList; }
+@if (nameListLocal.Count == 0)
+{
+    <div>@nameof(_nameList) is empty</div>
+}
+else
+{
+    @foreach (var name in nameListLocal)
+    {
+        <div>@name.Id:@name.FullName</div>
+    }
+}
+@code {
+    private string _wordAdd = string.Empty;
+    private string _wordCheck = string.Empty;
+
+    private List<Name> _nameList = new();
+
+    private async Task DoWordAdd()
+    {
+        try
+        {
+            // TODO: ensure ":memory:" is not managed
+            var connectionStringBuilder = new SqliteConnectionStringBuilder { DataSource = ":memory:" };
+            var connection = new SqliteConnection(connectionStringBuilder.ToString());
+
+            var options = new DbContextOptionsBuilder<TestDbCOntext>()
+                .UseSqlite(connection)
+                .Options;
+
+            using var db = new TestDbCOntext(options);
+            db.Database.OpenConnection();
+            await db.Database.EnsureCreatedAsync();
+            var nextId = db.Names!.Count() + 1;
+            db.Names.Add(new Name { Id = nextId, FullName = _wordAdd });
+            await db.SaveChangesAsync();
+            var nameListLocal = new List<Name>();
+            await foreach (var name in db.Names.AsAsyncEnumerable())
+            {
+                nameListLocal.Add(name);
+            }
+            _nameList = nameListLocal;
+            db.Database.CloseConnection();
+        }
+        catch (Exception e)
+        {
+
+        }
+    }
+
+    @*
+    private void DoWordCheck()
+    {
+
+    }
+    *@
+
+    private async Task DoReadDbEntriesIntoMemoryAndDisplayOnUi()
+    {
+        try
+        {
+            // TODO: ensure ":memory:" is not managed
+            var connectionStringBuilder = new SqliteConnectionStringBuilder { DataSource = ":memory:" };
+            var connection = new SqliteConnection(connectionStringBuilder.ToString());
+
+            var options = new DbContextOptionsBuilder<TestDbCOntext>()
+                .UseSqlite(connection)
+                .Options;
+
+            using var db = new TestDbCOntext(options);
+            db.Database.OpenConnection();
+            await db.Database.EnsureCreatedAsync();
+
+            var nameListLocal = new List<Name>();
+            await foreach (var name in db.Names.AsAsyncEnumerable())
+            {
+                nameListLocal.Add(name);
+            }
+            _nameList = nameListLocal;
+
+            db.Database.CloseConnection();
+        }
+        catch (Exception e)
+        {
+            
+        }
+    }
+}
