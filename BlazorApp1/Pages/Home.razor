@@ -5,3 +5,45 @@
 <h1>Hello, world!</h1>
 
 Welcome to your new app.
+
+<hr />
+
+<div>
+    Goal: represent a filepath by an int within C# managed memory,
+    and map to the respective filepath on demand by asking a DB that exists outside C# managed memory.
+</div>
+
+<hr />
+
+<input @bind="_wordAdd"/>
+<button @onclick="DoWordAdd">Add</button>
+
+<hr/>
+
+<input @bind="_wordCheck"/>
+<button @onclick="DoWordCheck">Check</button>
+
+<hr/>
+
+<button @onclick="DoEnumerateDatabaseEntries">DoEnumerateDatabaseEntries</button>
+foreach...
+
+@code {
+    private string _wordAdd = string.Empty;
+    private string _wordCheck = string.Empty;
+
+    private void DoWordAdd()
+    {
+        
+    }
+    
+    private void DoWordCheck()
+    {
+        
+    }
+    
+    private void DoEnumerateDatabaseEntries()
+    {
+        
+    }
+}
