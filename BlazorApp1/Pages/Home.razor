@@ -39,10 +39,12 @@
 <input @bind="_wordAdd"/>
 <button @onclick="DoWordAdd">Add</button>
 
+@*
 <hr/>
 
 <input @bind="_wordCheck"/>
 <button @onclick="DoWordCheck">Check</button>
+*@
 
 <hr/>
 
@@ -83,6 +85,12 @@ else
             var nextId = db.Names!.Count() + 1;
             db.Names.Add(new Name { Id = nextId, FullName = _wordAdd });
             await db.SaveChangesAsync();
+            var nameListLocal = new List<Name>();
+            await foreach (var name in db.Names.AsAsyncEnumerable())
+            {
+                nameListLocal.Add(name);
+            }
+            _nameList = nameListLocal;
             db.Database.CloseConnection();
         }
         catch (Exception e)
@@ -91,10 +99,12 @@ else
         }
     }
 
+    @*
     private void DoWordCheck()
     {
 
     }
+    *@
 
     private async Task DoReadDbEntriesIntoMemoryAndDisplayOnUi()
     {
