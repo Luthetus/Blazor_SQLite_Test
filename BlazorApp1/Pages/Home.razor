@@ -19,6 +19,15 @@
 <hr />
 
 <div>
+    Speculation/Concern: if it turns out that the only way of using SQLite with WASM results in the DB residing as C# managed memory,
+    this won't be an issue since I only use WASM for the demo. If this means the code stays the same between the native and demo app, just that
+    the underlying implementation of the SQLite database changes, then so be it. What matters is that natively
+    I can persist the SQLite database outside of C# managed memory.
+</div>
+
+<hr />
+
+<div>
     Resources (learn.microsoft.com):
     <ul>
         <li>
