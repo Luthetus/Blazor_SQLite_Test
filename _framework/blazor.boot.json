@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "BlazorApp1",
   "resources": {
-    "hash": "sha256-v0p0zFT+xdM0G9oOY63YMZl6WZQrL1X+ZjCyW0wcJ98=",
+    "hash": "sha256-CVk4oQC8bimUTnGNBtmNqsuPaSvGzWNU8IfeXZCOsuM=",
     "fingerprinting": {
       "Microsoft.AspNetCore.Components.1rjzyl1an5.wasm": "Microsoft.AspNetCore.Components.wasm",
       "Microsoft.AspNetCore.Components.Web.akqz85au1m.wasm": "Microsoft.AspNetCore.Components.Web.wasm",
@@ -36,7 +36,7 @@
       "System.Text.Json.m4wdlob2qg.wasm": "System.Text.Json.wasm",
       "System.Text.RegularExpressions.k8ibga7wut.wasm": "System.Text.RegularExpressions.wasm",
       "System.Private.CoreLib.xoo00enu76.wasm": "System.Private.CoreLib.wasm",
-      "BlazorApp1.7m16hg1w68.wasm": "BlazorApp1.wasm",
+      "BlazorApp1.hjh4ya41rg.wasm": "BlazorApp1.wasm",
       "dotnet.native.iatd1tqjs4.js": "dotnet.native.js",
       "dotnet.native.4nmh82ggwj.wasm": "dotnet.native.wasm",
       "dotnet.js": "dotnet.js",
@@ -95,7 +95,7 @@
       "System.Text.Encodings.Web.dvi1t3okep.wasm": "sha256-N0H/XiI7CqSVWRBwOAksJI9mQ1UaYSw6kuREMzV/aw8=",
       "System.Text.Json.m4wdlob2qg.wasm": "sha256-5qjfGZGHbvBXYE9OBLQ32FHz6vObx9o8C5SsZm1rOto=",
       "System.Text.RegularExpressions.k8ibga7wut.wasm": "sha256-7OYvLuFLvwbax++2u+uoDmoaX8o/Q8wcYJC92eP1YjA=",
-      "BlazorApp1.7m16hg1w68.wasm": "sha256-r05fhwPR7tlsanb8WA/P5vPyJhCkQIZkGFYbAeU57vM="
+      "BlazorApp1.hjh4ya41rg.wasm": "sha256-M4SVAm123oqJNxXbEvPLbr9kEByfv914nsmzjZWVhtY="
     }
   },
   "cacheBootResources": true,
