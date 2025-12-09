@@ -15,28 +15,24 @@ public class Name
 // Posted by fingers10, modified by community. See post 'Timeline' for change history
 // Retrieved 2025-12-08, License - CC BY-SA 4.0
 
-public class TestDbCOntext : DbContext
+public class EmployeeDataContext : DbContext
 {
     public DbSet<Name> Names { get; set; } = default!;
 
-    public TestDbCOntext(DbContextOptions<TestDbCOntext> options) : base(options)
+    protected readonly IConfiguration Configuration;
+
+    // https://www.allhandsontech.com/programming/blazor/how-to-sqlite-blazor-2/
+    public EmployeeDataContext(IConfiguration configuration)
     {
+        Configuration = configuration;
     }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        base.OnModelCreating(modelBuilder);
+    //public TestDbCOntext(DbContextOptions<TestDbCOntext> options) : base(options)
+    //{
+    //}
 
-        modelBuilder.Entity<Name>().ToTable("Names");
-        modelBuilder.Entity<Name>().HasIndex(x => x.FullName);
-        // TODO: Decide collation
-        modelBuilder.Entity<Name>().Property(x => x.FullName).UseCollation("nocase");
-    }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder options)
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        options.LogTo(Console.WriteLine, LogLevel.Warning)
-                .EnableDetailedErrors()
-                .EnableSensitiveDataLogging(true);
+        optionsBuilder.UseSqlite(Configuration.GetConnectionString("Data Source=Employees.db"));
     }
 }
